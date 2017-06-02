@@ -34,7 +34,7 @@
 	ln -s /usr/local/python27/bin/ansible-doc /usr/bin/ansible-doc
 	ln -s /usr/local/python27/bin/ansible-playbook /usr/bin/ansible-playbook
 	mkdir -p /etc/ansible
-	cat /etc/ansible/hosts
+	cat /etc/ansible/hosts	#添加远程服务器IP，本机对所有的服务器做了密钥认证
 	[test]
 	192.168.112.139
 	192.168.112.140
@@ -54,6 +54,9 @@
 
 ###5配置django项目
 ####(1)、wsgi.py设置
+	
+	cd /var/www/html/
+	git clone https://bihongfei@git.icsoc.net/bihongfei/CMDB.git
 	cd /var/www/html/CMDB/CMDB/
 	vim wsgi.py
 
@@ -82,15 +85,53 @@
 	#        Require all granted
 	    </Directory>
 	</VirtualHost>
-	
-####(3)、密钥权限设置
+####(3)、django项目配置
+
+	cd /var/www/html/CMDB	
+	[root@zabbix CMDB]# python2.7 manage.py check #检查diango项目，出现以下表示没错
+	System check identified no issues (0 silenced).
+	[root@zabbix CMDB]# python2.7 manage.py makemigrations #生成数据映射文件
+	Migrations for 'Hardware':
+	  0001_initial.py:
+	    - Create model Hardware
+	Migrations for 'Rsa':
+	  0001_initial.py:
+	    - Create model Rsa
+	    - Create model UserPermission
+	Migrations for 'User':
+	  0001_initial.py:
+	    - Create model User
+	[root@zabbix CMDB]# python2.7 manage.py syncdb #同步到数据库
+	#第一次执行会要求设置django后台管理用户名、密码，切记自己的设置的后台用户名及密码
+	Would you like to create one now? (yes/no): yes
+	Username (leave blank to use 'root'): admin
+	Email address: admin@qq.com
+	Password:
+	Password (again):
+####(4)、django后端样式问题
+
+	[root@zabbix static]# python2.7
+	Python 2.7.12 (default, Aug 23 2016, 09:47:48)
+	[GCC 4.4.7 20120313 (Red Hat 4.4.7-18)] on linux2
+	Type "help", "copyright", "credits" or "license" for more information.
+	>>> import django
+	>>> django.__file__
+	'/usr/local/python27/lib/python2.7/site-packages/django/__init__.pyc'
+	#得到如上的地址，则admin的样式目录为/usr/local/python27/lib/python2.7/site-packages/django/contrib/admin/static，拷贝到项目目录下的static目录中即可
+	cp -rf /usr/local/python27/lib/python2.7/site-packages/django/contrib/admin/static/admin/ /var/www/html/CMDB/static/
+
+
+
+####(5)、密钥权限设置
 	ssh-keygen #生成密钥对
 	ssh-copy-id xxx.xxx.xxx.xxx #推送本地公钥到远程服务器
 	cp -rf /root/.ssh/id_rsa /var/www/html/CMDB/CMDB/ #拷贝私钥到密钥系统目录
+	mkdir -p /var/www/.ssh/
 	cp -rf /root/.ssh/known_hosts /var/www/.ssh/known_hosts #需要apache用户下也有授信列表
 	chown -R root.apache /var/www
 	chmod -R 775 /var/www
 	service httpd restart
+####(4)、浏览器访问IP/index
 
 ###错误示例：
 
