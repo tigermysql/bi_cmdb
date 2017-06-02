@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}
+    硬件管理页
+{% endblock %}
+
+{% block css %}
+<style>
+    .myinfocon{
+        width: 300px;
+        padding: 10px;
+        line-height: 14px;
+        font-size: 12px;
+        background: black;
+        color: #fff;
+        border-radius: 3px;
+        position: absolute;
+        z-index: 999;
+    }
+    .myinfocon p{
+        display: block;
+        width: 100%;
+        height: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block row %}
+<div class="box col-md-12">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2><i class="glyphicon glyphicon-user"></i> 硬件展示</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-setting btn-round btn-default"><i class="glyphicon glyphicon-cog"></i></a>
+                <a href="#" class="btn btn-minimize btn-round btn-default"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round btn-default"><i class="glyphicon glyphicon-remove"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+                <thead><hr>
+                    <tr>
+                        <th class="text-center">IP</th>
+                        <th class="text-center">主机名</th>
+                        <th class="text-center">MAC</th>
+                        <th class="text-center">状态</th>
+                        <th class="text-center">系统</th>
+                        <th class="text-center">厂商</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for hardware in hardwareData %}
+                    <tr>
+                        <td class="text-center">{{ hardware.ip }}</td>
+                        <td class="myinfo text-center" data-myinfo="" style="position:relative"><a href="#" data-placement='top' data-toggle="tooltip">{{ hardware.hostname }}</a></td>
+                        <td class="text-center">{{ hardware.mac }}</td>
+                        <td class="text-center">
+                            <span class="label-success label label-default">未知</span>
+                        </td>
+                        <td class="text-center">{{ hardware.os }}</td>
+                        <td class="text-center">{{ hardware.manu }}</td>
+                        <td class="text-center">
+                            <a class="button button-glow button-rounded button-raised button-action button-small"  href="#" onclick="state_update('{{ hardware.ip }}',this)">
+                                <i class="glyphicon glyphicon-refresh"></i>
+                                更新
+                            </a>
+                            <a class="button button-glow button-rounded button-raised button-primary button-small"  href="#" onclick="update_host('{{ hardware.id }}')">
+                                <i class="glyphicon glyphicon-edit icon-white"></i>
+                                编辑
+                            </a>
+                            <a class="button button-glow button-rounded button-raised button-caution button-small"  href="/Hardware/delhost/{{ hardware.id }}" onClick="delhost('{{ hardware.ip }}')">
+                                <i class="glyphicon glyphicon-trash icon-white"></i>
+                                删除
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div id="result"></div> 
+        </div>
+    </div>
+</div>
+    <!--/span-->
+{% endblock %}
+{% block js %}
+    <script LANGUAGE="JavaScript">
+            function add_hardware(){
+                window.open("/Hardware/add_hardware/", "增加主机", "height=500, width=700, top=200, left=300 toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+            }
+            function update_host(data) {
+                console.log(data);
+                window.open ("/Hardware/update_host/{{ hardware.id }}" + data, "主机列表", "height=410, width=800, top=200, left=300 toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+            }
+            function delhost(data) {
+                if (!confirm("确认要删除"+ '"' + data + '"' + "主机？")) {
+                window.event.returnValue = false;
+                }
+            }
+            function state_update(data,t) {
+                var _this = $(t).parent().parent();
+                console.log(data);
+                $.ajax(
+                    {
+                        url:"/Hardware/state_update/",
+                        type:"post",
+                        data:{"ip":data},
+                        async:true,
+                        success:function(Data) {
+                            console.log(Data);
+                            console.log(Data["data"])
+                          //   for (var i = 0;i < Data["data"].length;i++) {
+                          //       $("#result").append("<p>"+Data["data"]+"</p>")
+                          // }
+                            /*var text = "";
+                            for(var key in Data.data){
+                                text += '<p>'+key+':'+Data.data[key]+'</p>';
+                            }
+                            $("#result").html(text)*/
+                            _this.find(".myinfo").attr("myinfo",JSON.stringify(Data.data));
+
+                        },
+                        error:function(err) {
+                            alert(err)
+                        }   
+                    }
+                )
+            }
+            $(".myinfo").on("mouseenter",function(){
+                var thisLeft = this.offsetWidth,thisTop = -this.offsetHeight;
+                var thisData = $(this).attr("myinfo");
+                var text = '';
+                if(thisData){
+                    var titleHtml = '<div class="myinfocon" style="top: '+thisTop+'px; left: '+thisLeft+'px;"></div>'
+                    $(this).append(titleHtml);
+                    var data = JSON.parse(thisData);
+                    for(var key in data){
+                        text += '<p><span style="float:left;">'+key+'</span><span style="float:right;">'+data[key]+'</span></p>';
+                    }
+                    $(".myinfocon").html(text);
+                }
+                
+            })
+            $(".myinfo").on("mouseleave",function(){
+                $(this).find(".myinfocon").remove();
+            })
+
+            /*<div class="popover fade right in" role="tooltip" id="popover862457" style="top: 98px; left: 188.8px; display: block;"><div class="arrow"></div><h3 class="popover-title">可登陆的服务器</h3><div class="popover-content">192.168.112.147 123.207.168.198 </div></div>*/
+    </script>
+{% endblock %}

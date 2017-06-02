@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+    批量增加主机
+{% endblock %}
+{% block row %}
+<div class="box col-md-12">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2>批量增加主机</h2>
+
+            <div class="box-icon">
+                <a href="#" class="btn btn-setting btn-round btn-default"><i class="glyphicon glyphicon-cog"></i></a>
+                <a href="#" class="btn btn-minimize btn-round btn-default"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round btn-default"><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+        </div>
+        <div class="box-content">
+            <h3 style="color:red;">{{ success }}</h3>
+            <h3 style="color:red;">{{ fail }}</h3>            
+            <p><b>请按照以下格式填写，多台服务器以回车换行，具体如下:</b></p>
+            <p style="color:blue;">IP 主机名 MAC 厂商 资产编号 系统 机房 SN 描述</p>
+			<form action="" method="post">
+			        <textarea style="height:400px;" class="form-control" id="description" placeholder="192.168.1.1 asterisk-61 52:54:00:b3:63:23 R720 A-001 centos6.5 西三旗 SN asterisk服务器" name="description"></textarea><br>
+			        <input type="submit" id="submit" class="button button-glow button-rounded button-raised button-primary" value="提交"><br>
+			</form>
+						
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- 表单验证，暂时未启用，直接使用input自带的 required="required"/做的验证 -->
+{% block js %}
+	<script>
+	</script>
+{% endblock %}

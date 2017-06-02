@@ -1,0 +1,5 @@
+- name: push rsa_pub
+  hosts: all
+  tasks:
+  - authorized_key: user=root key={{ item }} state={{ state }}
+    with_items: "{{ pub_list }}"

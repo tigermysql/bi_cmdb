@@ -1,0 +1,27 @@
+{% extends "rsaTemplate/host_user_base.html" %}
+{% block title %}
+    用户列表
+{% endblock %}
+
+{% block box %}
+<div class="box col-md-6">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2>创建用户</h2>
+        </div>
+        <div class="box-content">
+        	<form action="" method="post">
+			    <div class="form-group has-warning col-md-4">
+					<input type="text" class="form-control" id="user" placeholder="请输入你的名字" name="user">	
+			    </div>
+			    <div class="form-group has-error col-md-4">                
+			        <textarea class="form-control" id="rsa_pub" placeholder="请把你的公钥拷贝到这" name="rsa_pub"></textarea>
+			    </div>
+			        <input type="submit" class="button button-glow button-rounded button-raised button-primary" value="上传">
+			</form>
+			<h2>{{ state }}</h2>
+        </div>        
+    </div>
+</div>
+			
+{% endblock %}

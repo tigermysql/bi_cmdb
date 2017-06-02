@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+    {% block title %}
+    ICSOC资产管理系统
+    {% endblock %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    <!-- <link id="bs-css" href="/static/css/bootstrap-cerulean.min.css" rel="stylesheet"> -->
+    <link href="/static/css/bootstrap-cerulean.min.css" rel="stylesheet">
+    <link href="/static/css/charisma-app.css" rel="stylesheet">
+    <link href='/static/bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
+    <link href='/static/bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
+    <link href='/static/bower_components/chosen/chosen.min.css' rel='stylesheet'>
+    <link href='/static/bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
+    <link href='/static/bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
+    <link href='/static/bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' rel='stylesheet'>
+    <link href='/static/css/jquery.noty.css' rel='stylesheet'>
+    <link href='/static/css/noty_theme_default.css' rel='stylesheet'>
+    <link href='/static/css/elfinder.min.css' rel='stylesheet'>
+    <link href='/static/css/elfinder.theme.css' rel='stylesheet'>
+    <link href='/static/css/jquery.iphone.toggle.css' rel='stylesheet'>
+    <link href='/static/css/uploadify.css' rel='stylesheet'>
+    <link href='/static/css/animate.min.css' rel='stylesheet'>
+    <link href='/static/css/buttons.css' rel='stylesheet'>
+
+    <!-- <link rel="stylesheet" href="/static/css/normalize.css" />
+    <link rel="stylesheet" href="/static/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" href="/static/css/demo.css" /> -->
+    <link rel="stylesheet" href="/static/css/component.css" />
+    {% block css %}
+    {% endblock %}
+    <!-- jQuery -->
+    <script src="/static/bower_components/jquery/jquery.min.js"></script>
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+</head>
+
+<body>
+    <!-- topbar starts -->
+    <div class="navbar navbar-default" role="navigation">
+
+        <div class="navbar-inner">
+            <button type="button" class="navbar-toggle pull-left animated flip">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index"> <img alt="Charisma Logo" src="/static/img/logo20.png" class="hidden-xs"/>
+                <span>ICSOC</span></a>
+
+            <!-- user dropdown starts -->
+            <div class="btn-group pull-right">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"> {{ cookie_name }}</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/logout">退出</a></li>
+
+                </ul>
+            </div>
+            <!-- user dropdown ends -->
+
+            <!-- theme selector starts -->
+            <!-- 首页admin旁边的下拉按钮start -->
+            <!-- <div class="btn-group pull-right theme-container animated tada">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-tint"></i><span
+                        class="hidden-sm hidden-xs"> Change Theme / Skin</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" id="themes">
+                    <li><a data-value="classic" href="#"><i class="whitespace"></i> Classic</a></li>
+                    <li><a data-value="cerulean" href="#"><i class="whitespace"></i> Cerulean</a></li>
+                    <li><a data-value="cyborg" href="#"><i class="whitespace"></i> Cyborg</a></li>
+                    <li><a data-value="simplex" href="#"><i class="whitespace"></i> Simplex</a></li>
+                    <li><a data-value="darkly" href="#"><i class="whitespace"></i> Darkly</a></li>
+                    <li><a data-value="lumen" href="#"><i class="whitespace"></i> Lumen</a></li>
+                    <li><a data-value="slate" href="#"><i class="whitespace"></i> Slate</a></li>
+                    <li><a data-value="spacelab" href="#"><i class="whitespace"></i> Spacelab</a></li>
+                    <li><a data-value="united" href="#"><i class="whitespace"></i> United</a></li>
+                </ul>
+            </div> -->
+            <!-- 首页admin旁边的下拉按钮ends -->
+            <!-- theme selector ends -->
+
+            <ul class="collapse navbar-collapse nav navbar-nav top-menu">
+                <li><a href="http://www.baidu.com"><i class="glyphicon glyphicon-globe"></i> 不懂点我</a></li>
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-star"></i> 基本功能 <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">功能1(未开放)</a></li>
+                        <li><a href="#">功能2(未开放)</a></li>
+                        <li><a href="#">功能3(未开放)</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">持续开放中</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <form class="navbar-search pull-left">
+                        <input placeholder="Search" class="search-query form-control col-md-10" name="query"
+                               type="text">
+                    </form>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <!-- topbar ends -->
+<div class="ch-container">
+    <div class="row">
+        
+        <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        <li class="nav-header">菜单</li>
+                        <li><a class="ajax-link" href="/index" ><i class="glyphicon glyphicon-home"></i><span> 系统首页</span></a>
+                        </li>
+                        <li>
+                        <a class="ajax-link" href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-hdd"></i> 资产管理<span style="float:right" class="glyphicon glyphicon-chevron-left"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <!-- <li><a href="#"> 创建机房</a></li> -->
+                                <!-- <li><a href="#"> 机房列表</a></li> -->
+                                <li><a href="/Hardware/display"> 主机列表</a></li>
+                                <li><a href="/Hardware/add_hardware/"> 添加主机</a></li>
+                                <li><a href="/Hardware/add_hardware_batch/"> 批量添加主机</a></li>
+                                <!-- <li><a href="/Hardware/test"> 测试项</a></li> -->
+                                
+                                <!-- <li class="divider">分隔符</li>
+                                <li><a href="#">运行状态</a></li>
+                                <li class="divider">分隔符</li>
+                                <li><a href="#">机柜状态</a></li> -->
+                            </ul>  
+                        </li>                      
+                        <li>
+                        <a class="ajax-link" href="/Ansible/index" data-toggle="dropdown"><i class="glyphicon glyphicon-tasks"></i> 远程控制
+                        <span style="float:right" class="glyphicon glyphicon-chevron-left"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/Ansible/index">远程命令</a></li>
+                                <!-- <li><a href="#">W-shell</a></li> -->
+                                <li><a href="/Ansible/service">服务管理</a></li>
+                                <!-- <li><a href="/Ansible/roles">执行roles</a></li> -->
+                                <!-- <li><a href="#">文件分发</a></li> -->
+                                
+                                <!-- <li><a href="/Ansible/disk_cleanup">磁盘清理</a></li> -->
+                                
+                                <!-- <li class="divider">分隔符</li> -->
+                                <!-- <li><a href="#">查看主机</a></li> -->
+                                <!-- <li><a href="#">增加主机</a></li> -->
+                                <!-- <li><a href="#">查看roles</a></li> -->
+                            </ul> 
+                        </li>
+                        <li>
+                        <a class="ajax-link" href="/Rsa/index" data-toggle="dropdown"><i class="glyphicon glyphicon-wrench"></i> 密钥管理
+                        <span style="float:right" class="glyphicon glyphicon-chevron-left"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/Rsa/userlist_dis">密钥用户</a></li>
+                                <li><a href="/Rsa/hostlist_dis">主机列表</a></li>
+                            </ul>   
+                        </li>
+                        <!-- <li><a class="ajax-link" href="/Log/index"><i class="glyphicon glyphicon-list-alt"></i><span> 日志管理</span></a></li> -->
+                        <!-- <li><a class="ajax-link" href="/Api/index"><i class="glyphicon glyphicon-eye-open"></i><span> 接口管理</span></a></li> -->
+                        
+                        <!-- <li>
+                        <a class="ajax-link" href="typography.html" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> 用户管理
+                        <span class="caret"></span ></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/Rsa/upload">增加用户</a></li>
+                                <li><a href="/Rsa/push_dis">授权管理</a></li>
+                            </ul>   
+                        </li> -->
+                    
+                        <!-- <li class="nav-header hidden-md">Sample Section</li>
+                        <li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-plus"></i><span> Accordion Menu</span></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Child Menu 1</a></li>
+                                <li><a href="#">Child Menu 2</a></li>
+                            </ul>
+                        </li> -->
+                        <!-- 左边导航栏: -->
+                        <!-- <li><a class="ajax-link" href="calendar.html"><i class="glyphicon glyphicon-calendar"></i><span> Calendar</span></a>
+                        </li>
+                        <li><a class="ajax-link" href="grid.html"><i
+                                    class="glyphicon glyphicon-th"></i><span> Grid</span></a></li>
+                        <li><a href="tour.html"><i class="glyphicon glyphicon-globe"></i><span> Tour</span></a></li>
+                        <li><a class="ajax-link" href="icon.html"><i
+                                    class="glyphicon glyphicon-star"></i><span> Icons</span></a></li>
+                        <li><a href="error.html"><i class="glyphicon glyphicon-ban-circle"></i><span> Error Page</span></a>
+                        </li>
+                        <li><a href="login.html"><i class="glyphicon glyphicon-lock"></i><span> Login Page</span></a>
+                        </li> -->
+                        <!-- 左边导航栏结束 -->
+                    </ul>
+                    <!-- <label id="for-is-ajax" for="is-ajax"><input id="is-ajax" type="checkbox"> Ajax on menu</label> -->
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+        <div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    {% block label %}
+    {% endblock %}      
+</div>
+<div class=" row">
+    {% block row %}
+    {% endblock %}
+</div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <!-- <div class="box-header well">
+            
+
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round btn-default"><i
+                            class="glyphicon glyphicon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                            class="glyphicon glyphicon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round btn-default"><i
+                            class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div> -->
+                <!-- Ads, you can remove these -->
+                <div class="col-lg-5 col-md-12 hidden-xs center-text">
+                    <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+                    <!-- Charisma Demo 4 -->
+                    <ins class="adsbygoogle"
+                         style="display:inline-block;width:336px;height:280px"
+                         data-ad-client="ca-pub-5108790028230107"
+                         data-ad-slot="9467443105"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+
+                <div class="col-lg-5 col-md-12 visible-xs center-text">
+                    <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+                    <!-- Charisma Demo 5 -->
+                    <ins class="adsbygoogle"
+                         style="display:inline-block;width:250px;height:250px"
+                         data-ad-client="ca-pub-5108790028230107"
+                         data-ad-slot="8957582309"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                <!-- Ads end -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</div><!--/fluid-row-->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Settings</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Here settings can be configured...</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                    <a href="#" class="btn btn-primary" data-dismiss="modal">Save changes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--/.fluid-container-->
+
+<!-- external javascript -->
+<script src="/static/bower_components/flot/excanvas.min.js"></script>
+<script src="/static/bower_components/flot/jquery.flot.js"></script>
+<script src="/static/bower_components/flot/jquery.flot.pie.js"></script>
+<script src="/static/bower_components/flot/jquery.flot.stack.js"></script>
+<script src="/static/bower_components/flot/jquery.flot.resize.js"></script>
+<!-- chart libraries end -->
+<script src="/static/js/init-chart.js"></script>
+<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- library for cookie management -->
+<script src="/static/js/jquery.cookie.js"></script>
+<!-- calender plugin -->
+<script src='/static/bower_components/moment/min/moment.min.js'></script>
+<script src='/static/bower_components/fullcalendar/dist/fullcalendar.min.js'></script>
+<!-- data table plugin -->
+<script src='/static/js/jquery.dataTables.min.js'></script>
+
+<!-- select or dropdown enhancer -->
+<script src="/static/bower_components/chosen/chosen.jquery.min.js"></script>
+<!-- plugin for gallery image view -->
+<script src="/static/bower_components/colorbox/jquery.colorbox-min.js"></script>
+<!-- notification plugin -->
+<script src="/static/js/jquery.noty.js"></script>
+<!-- library for making tables responsive -->
+<script src="/static/bower_components/responsive-tables/responsive-tables.js"></script>
+<!-- tour plugin -->
+<script src="/static/bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js"></script>
+<!-- star rating plugin -->
+<script src="/static/js/jquery.raty.min.js"></script>
+<!-- for iOS style toggle switch -->
+<script src="/static/js/jquery.iphone.toggle.js"></script>
+<!-- autogrowing textarea plugin -->
+<script src="/static/js/jquery.autogrow-textarea.js"></script>
+<!-- multiple file upload plugin -->
+<script src="/static/js/jquery.uploadify-3.1.min.js"></script>
+<!-- history.js for cross-browser state change on ajax -->
+<script src="/static/js/jquery.history.js"></script>
+<!-- application script for Charisma demo -->
+<script src="/static/js/charisma.js"></script>
+
+<script src="/static/js/classie.js"></script>
+
+{% block js %}
+{% endblock %}
+ 
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}
+    用户列表
+{% endblock %}
+
+
+
+{% block row %}
+
+<!-- <div class="row"> -->
+<div class="box col-md-12">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2><i class="glyphicon glyphicon-user"></i> 密钥用户</h2>
+            <a style="float:right" class="btn btn-primary btn-sm" href="#" onclick="add_user()">增加密钥用户</a>     
+        </div>
+        <div class="box-content">
+        <!-- <div class="alert alert-info"><a href="#" class="btn btn-info btn-setting">增加用户</a></div> -->
+            <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+                <thead>                     
+                <tr>
+                    <th class="text-center">用户名</th>
+                    <th class="text-center">可登陆的服务器</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for data in all_ulp %}
+                    <tr>
+                        <td class="text-center" id="user" style="font-weight:bold;">{{ data.0 }}</td>
+                        <!-- <td><a href="#" style="font-size:20px;" title="{{ data.2 }}" data-toggle="tooltip" >{{ data.1 }}</a></td> -->
+                        <td class="text-center"><a href="#" style="font-size:20px;" data-toggle="popover" data-content="{% for ip in data.2 %}{{ ip }} {% endfor %}" title="可登陆的服务器">{{ data.1 }}</a></td>  <!-- 注意：循环data.2的ip列表的时候，在{{ ip }}后面记得加空格，要不前端显示不换行会堆成一堆 -->
+                        <td class="text-center">
+                            <a class="button button-glow button-rounded button-raised button-primary button-small" href="#" onclick="add_userpermission('{{ data.0 }}')">
+                                <i class="glyphicon glyphicon-edit icon-white"></i>
+                                    编辑
+                            </a>
+                            <a class="button button-glow button-rounded button-raised button-caution button-small" href="/Rsa/delete/?user={{ data.0 }}" onclick="deluser('{{ data.0 }}')">
+                                <i class="glyphicon glyphicon-trash icon-white"></i>
+                                    删除
+                            </a>
+                            <a class="button button-glow button-rounded button-raised button-action button-small" href="#" onclick="rsapub_update('{{ data.0 }}')">
+                                <i class="glyphicon glyphicon-wrench icon-white"></i>
+                                    更新公钥
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h2>{{ state }}</h2>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+    <script LANGUAGE="JavaScript">
+            function add_userpermission(data) {
+                console.log(data);
+                window.open ("/Rsa/user_dis/?user=" + data, "主机列表", "height=410, width=800, top=200, left=300 toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+            }
+            function rsapub_update(data) {
+                console.log(data);
+                window.open ("/Rsa/rsapub_update/?user=" + data, "更新公钥", "height=410, width=800, top=200, left=300 toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+            }
+            function add_user(){
+                window.open("/Rsa/upload/", "增加用户", "height=410, width=800, top=200, left=300 toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+            }
+            function deluser(data) {
+                if (!confirm("确认要删除"+ '"' + data + '"' + "的全部登陆权限？")) {
+                window.event.returnValue = false;
+                }
+            }
+    </script>
+
+{% endblock %}
+

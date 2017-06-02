@@ -1,0 +1,37 @@
+{% extends "hardwareTemplate/base.html" %}
+{% block title %}
+    修改服务器信息
+{% endblock %}
+{% block box %}
+<div class="box col-md-6">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2>修改服务器信息</h2>
+        </div>
+        <div class="box-content">
+			<form action="" method="post">
+			    <div class="form-group has-warning col-md-4">
+					<input type="text" class="form-control" id="ip" placeholder="IP地址" name="ip">	
+			    </div>
+			    <div class="form-group has-warning col-md-4">
+					<input type="text" class="form-control" id="hostname" placeholder="主机名" name="hostname">	
+			    </div>
+			    <div class="form-group has-warning col-md-4">
+					<input type="text" class="form-control" id="manu" placeholder="硬件厂商" name="manu">	
+			    </div>			
+			    <div class="form-group has-warning col-md-4">
+					<input type="text" class="form-control" id="mac" placeholder="物理地址" name="mac">	
+			    </div>
+			    <div class="form-group has-warning col-md-4">
+					<input type="text" class="form-control" id="os" placeholder="运行系统" name="os">	
+			    </div>			   
+				<div class="form-group has-error col-md-4">                
+			        <textarea class="form-control" id="description" placeholder="硬件描述" name="description"></textarea>
+			    </div>
+			        <input type="submit" class="button button-glow button-rounded button-raised button-primary" value="更新">
+			</form>
+			<h3>{{ state }}</h3>			
+        </div>
+    </div>
+</div>
+{% endblock %}

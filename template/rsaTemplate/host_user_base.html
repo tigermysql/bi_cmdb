@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>
+    {% block title %}
+    {% endblock %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    <link id="bs-css" href="/static/css/bootstrap-cerulean.min.css" rel='stylesheet'>
+    <link href="/static/css/charisma-app.css" rel="stylesheet">
+    <link href='/static/bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
+    <link href='/static/bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
+    <link href='/static/bower_components/chosen/chosen.min.css' rel='stylesheet'>
+    <link href='/static/bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
+    <link href='/static/bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
+    <link href='/static/bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' rel='stylesheet'>
+    <link href='/static/css/jquery.noty.css' rel='stylesheet'>
+    <link href='/static/css/noty_theme_default.css' rel='stylesheet'>
+    <link href='/static/css/elfinder.min.css' rel='stylesheet'>
+    <link href='/static/css/elfinder.theme.css' rel='stylesheet'>
+    <link href='/static/css/jquery.iphone.toggle.css' rel='stylesheet'>
+    <link href='/static/css/uploadify.css' rel='stylesheet'>
+    <link href='/static/css/animate.min.css' rel='stylesheet'>
+    <link href="/static/css/component.css" rel="stylesheet">
+    <link href='/static/css/buttons.css' rel='stylesheet'>
+    {% block css %}
+    {% endblock %}
+
+    <!-- jQuery -->
+    <script src="/static/bower_components/jquery/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+{% block box %}
+{% endblock %} 
+
+{% block js %}
+{% endblock %} 
+</body>
+</html>

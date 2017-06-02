@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}
+    远程管理页
+{% endblock %}
+
+{% block label %}
+    <ul class="breadcrumb">
+    <li>
+        <a href="/index">Home</a>
+    </li>
+    <li>
+        <a href="#">
+      		远程控制
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block row %}
+<div class="box-content">
+    <div class="form-group has-success col-md-4">
+        <input type="text" id="ip" class="form-control" placeholder="IP"><br>
+        <input type="password" id="password" class="form-control" placeholder="密码"><br>
+        <input type="text" id="cmd" class="form-control" placeholder="命令"><br>
+        <button id="button" class="button button-glow button-rounded button-raised button-primary" onclick="Cmd()">执行</button>
+        <br><br>
+        <div id="result"></div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    function Cmd() {
+        var ip=$('#ip').val()
+        var password=$('#password').val()
+        var cmd=$('#cmd').val()
+        $('#result').empty()
+        console.log({"ip":ip});
+        console.log({"password":password});
+        console.log({"cmd":cmd});
+        $.ajax(
+            {
+                url:"/Ansible/cmd",
+                type:"post",
+                data:{"ip":ip,"password":password,"cmd":cmd},
+                async:true,
+                success:function(Data) {
+                    console.log(Data);
+                    for (var i = 0;i < Data["dataList"].length;i++) {
+                        $("#result").append("<p><b>"+Data["dataList"][i]+"</b></p>")
+                    }
+                },
+                error:function(err) {
+                    alert(err)
+                }   
+            }
+        )
+    }
+</script>
+{% endblock %}

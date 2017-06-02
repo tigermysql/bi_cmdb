@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}
+    增加主机
+{% endblock %}
+{% block row %}
+<div class="box col-md-12">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2>增加主机</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-setting btn-round btn-default"><i class="glyphicon glyphicon-cog"></i></a>
+                <a href="#" class="btn btn-minimize btn-round btn-default"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round btn-default"><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+        </div>
+        <div class="box-content">
+        	<h3 style="color:red;">{{ state }}</h3>
+			<form action="" method="post">
+					<!-- <div> -->
+					<input type="text" class="form-control" id="ip" placeholder="IP地址" name="ip" required="required"/><br>
+					<!-- <span class="error" style="color:red;"></span> -->
+					<!-- </div> -->
+					<!-- <div> -->
+					<input type="text" class="form-control" id="hostname" placeholder="主机名" name="hostname" required="required"/><br>
+					<!-- <span class="error" style="color:red;"></span> -->
+					<!-- </div> -->
+					<input type="text" class="form-control" id="mac" placeholder="MAC" name="mac" required="required"/><br>
+					<input type="text" class="form-control" id="manu" placeholder="厂商" name="manu"><br>
+					<input type="text" class="form-control" id="code" placeholder="资产编号" name="code"><br>
+					<input type="text" class="form-control" id="os" placeholder="系统" name="os"><br>
+					<input type="text" class="form-control" id="idc" placeholder="机房" name="idc"><br>
+					<input type="text" class="form-control" id="sn" placeholder="SN" name="sn"><br>
+			        <textarea class="form-control" id="description" placeholder="描述" name="description"></textarea><br>
+			        <input type="submit" id="submit" class="button button-glow button-rounded button-raised button-primary" value="提交"><br>
+			</form>
+						
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- 表单验证，暂时未启用，直接使用input自带的 required="required"/做的验证 -->
+{% block js %}
+	<script>
+		$(
+        	function () {
+            	function submits(blurs){
+                	if(blurs == true){
+                    	$("#submit").attr("disabled",true)
+                	}
+                	else if(blurs == false){
+                    	$("#submit").removeAttr("disabled")
+                	}
+            	}
+            $("#ip").blur(
+            	function () {
+            		var ip = $("#ip").val();
+            		console.log(ip);
+            		if(ip){
+            			$("#ip").siblings("span.error").text("")
+            			$("#hostname").blur(
+            				function(){
+            					var hostname =$("#hostname").val();
+            					if(hostname){
+            						$("#hostname").siblings("span.error").text("")
+            						submits(false)
+            						}
+            					else{
+            						$("#hostname").siblings("span.error").text("主机名不能为空")
+            						}
+            					}
+            				)
+            			}
+            		else{
+            			$("#ip").siblings("span.error").text("IP地址不能为空")
+            			}
+            		}
+            	)
+            }
+        ) 	
+	</script>
+{% endblock %}

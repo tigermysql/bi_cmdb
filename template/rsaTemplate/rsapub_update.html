@@ -1,0 +1,23 @@
+{% extends "rsaTemplate/host_user_base.html" %}
+{% block title %}
+    更新公钥
+{% endblock %}
+
+{% block box %}
+<div class="box col-md-6">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2>{{ user }}</h2>
+        </div>
+        <div class="box-content">
+            <form action="" method="post">
+                <div class="form-group has-error col-md-4">                
+                    <textarea class="form-control" id="rsa_pub" placeholder="请输入你要更换的公钥" name="rsa_pub"></textarea>
+                </div>
+                <input type="submit" class="button button-glow button-rounded button-raised button-primary" value="更新">
+            </form>  
+                <h2>{{ state }}</h2> 
+        </div>        
+    </div>
+</div>
+{% endblock %} 

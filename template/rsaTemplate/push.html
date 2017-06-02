@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}
+    推送公钥
+{% endblock %}
+
+
+
+{% block row %}
+	<h4>请选择要授权的用户：</h4>
+    {% for rsa in rsadata %}
+    	<label><input type="checkbox" name="user" value={{ rsa.user }} />{{ rsa.user }}</label>
+   	{% endfor %}
+	<br><br>
+   	<h4>请选择授权可登陆的IP地址：</h4>
+   	{% for host in hostlist %}
+   		<label><input type="checkbox" name="ip" value={{ host.ip }} />{{ host.ip }}</label>
+   	{% endfor %}
+   	<br>
+   	<br>
+   	<button id="button" class="button button-action button-pill" onclick="Push()">授权</button>
+   	<br><br>
+   	<img id="imageId" src="/static/img/ajax-loaders/ajax-loader-6.gif" style="display:none">
+   	<h2 id="result"></h2>
+{% endblock %}
+
+{% block js %}
+	<script>
+		//jquery获取复选框值 
+		function Push(){ 
+			var chk_user =[]; 
+			var chk_ip =[];
+			$('input[name="user"]:checked').each(function(){ 
+				chk_user.push($(this).val()); 
+			}), 			
+			$('input[name="ip"]:checked').each(function(){
+				chk_ip.push($(this).val());
+			});
+			// $("#result").text("操作执行中......")
+			document.getElementById("imageId").style.display="inline";
+			console.log(chk_user)
+			console.log(chk_ip)
+			
+			$.ajax(
+				{
+					url:"/Rsa/push/",
+					type:"post",
+					data:{"user": JSON.stringify(chk_user),"ip": JSON.stringify(chk_ip)},
+					async:true,
+					success:function(Data) {
+						document.getElementById("imageId").style.display="none";
+						$("#result").text(Data["state"])
+					},
+					error:function(err) {
+						alert(err)
+					}				
+				}
+				)
+			}
+	</script>
+{% endblock %}

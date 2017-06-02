@@ -1,0 +1,84 @@
+{% extends "rsaTemplate/host_user_base.html" %}
+{% block title %}
+    用户列表
+{% endblock %}
+
+{% block box %}
+<div class="box col-md-6">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2>{{ ip }}</h2>
+            <ul>    
+                <select style="float:right" name="主机群组">
+                <option value="1">通信组</option>
+                <option value="2">应用组</option>
+                </select>
+            </ul>
+        </div>
+        <div class="box-content">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" name="chk_all" id="chk_all" />主机列表</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for euser in exist_userlist %} 
+                    <!-- 遍历已经可以登陆此ip的用户列表，展示的是默认勾选且不可选 -->
+                <tr>
+                    <td><input type="checkbox" name="user" value={{ euser }} checked="0" disabled="true" /> {{ euser }}</td>
+                </tr>
+                    {% endfor %}
+                    {% for neuser in noexist_userlist %}
+                    <!-- 遍历不可以登陆此ip的用户列表，展示的未勾选且可以勾选 -->
+                <tr>
+                    <td><input type="checkbox" name="user" value={{ neuser }} /> {{ neuser }}</td>
+                </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        <img id="imageId" src="/static/img/ajax-loaders/ajax-loader-6.gif" style="display:none">   
+        <h3 id="result"></h3> 
+        </div>
+    </div><br>
+    <button id="button" class="button button-glow button-rounded button-raised button-primary" onclick="Push()">增加</button>
+</div>
+{% endblock %} 
+
+{% block js %}
+    <script type="text/javascript">
+    $("#chk_all").click(function(){
+        $("input[name='user']").attr("checked", $(this).attr("checked")); // 使用attr只能执行一次
+        $("input[name='user']").prop("checked", $(this).prop("checked"));   //使用prop则完美实现全选和反选
+　　});
+</script>
+<script>
+    //jquery获取复选框值 
+    function Push(){ 
+        var chk_user =[];        
+        $('input[name="user"]:checked').each(function(){
+            chk_user.push($(this).val());
+        });
+        // $("#result").text("操作执行中......")f
+        document.getElementById("imageId").style.display="inline";
+        console.log(chk_user);           
+        console.log("{{ ip }}");
+        $.ajax(
+            {
+                url:"/Rsa/host_update/",
+                type:"post",
+                data:{"ip": "{{ ip }}","user": JSON.stringify(chk_user)},
+                async:true,
+                success:function(Data) {
+                    document.getElementById("imageId").style.display="none";
+                    console.log(Data)
+                    $("#result").text(Data["state"])
+                },
+                error:function(err) {
+                    alert(err)
+                }               
+            }
+        )
+    }
+</script>
+{% endblock %} 

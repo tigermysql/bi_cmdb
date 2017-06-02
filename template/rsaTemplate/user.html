@@ -1,0 +1,84 @@
+{% extends "rsaTemplate/host_user_base.html" %}
+{% block title %}
+    服务器列表
+{% endblock %}
+
+{% block box %}
+<div class="box col-md-6">
+    <div class="box-inner">
+        <div class="box-header well" data-original-title="">
+            <h2>{{ user }}</h2>
+            <ul>    
+                <select style="float:right" name="主机群组">
+                <option value="1">已授权</option>
+                <option value="2">未授权</option>
+                </select>
+            </ul>
+        </div>
+        <div class="box-content">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" name="chk_all" id="chk_all" />主机列表</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for eip in exist_iplist %} 
+                    <!-- 遍历用户已经可以登陆的服务器ip列表，展示的是默认勾选切不可选 -->
+                <tr>
+                    <td><input type="checkbox" name="ip" value={{ eip }} checked="0" disabled="true" /> {{ eip }}</td>
+                </tr>
+                    {% endfor %}
+                    {% for neip in noexist_iplist %}
+                    <!-- 遍历用户不可以登陆的服务器ip列表，展示的未勾选切可以勾选 -->
+                <tr>
+                    <td><input type="checkbox" name="ip" value={{ neip }} /> {{ neip }}</td>
+                </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        <img id="imageId" src="/static/img/ajax-loaders/ajax-loader-6.gif" style="display:none">   
+        <h3 id="result"></h3> 
+        </div>        
+    </div><br>
+    <button id="button" class="button button-glow button-rounded button-raised button-primary" onclick="Push()">增加</button>
+</div>
+{% endblock %} 
+
+{% block js %}
+    <script type="text/javascript">
+    $("#chk_all").click(function(){
+        $("input[name='ip']").attr("checked", $(this).attr("checked")); // 使用attr只能执行一次
+        $("input[name='ip']").prop("checked", $(this).prop("checked")); // 使用prop则完美实现全选和反选
+　　});
+</script>
+<script>
+    //jquery获取复选框值 
+    function Push(){ 
+        var chk_ip =[];        
+        $('input[name="ip"]:checked').each(function(){
+            chk_ip.push($(this).val());
+        });
+        // $("#result").text("操作执行中......")
+        document.getElementById("imageId").style.display="inline";
+        console.log(chk_ip);           
+        console.log("{{ user }}");
+        $.ajax(
+            {
+                url:"/Rsa/user_update/",
+                type:"post",
+                data:{"user": "{{ user }}","ip": JSON.stringify(chk_ip)},
+                async:true,
+                success:function(Data) {
+                    document.getElementById("imageId").style.display="none";
+                    console.log(Data)
+                    $("#result").text(Data["state"])
+                },
+                error:function(err) {
+                    alert(err)
+                }               
+            }
+        )
+    }
+</script>
+{% endblock %} 
