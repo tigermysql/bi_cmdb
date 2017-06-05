@@ -85,7 +85,10 @@ def add_hardware(request):
 	else:
 		pass
 	return render_to_response("hardwareTemplate/add_hardware.html",locals())
+@loginAuth
 def add_hardware_batch(request):
+	request.COOKIES["username"] and request.session["username"]
+	cookie_name = request.COOKIES["username"]	
 	if request.method == "POST" and request.POST:
 		description = request.POST["description"].split('\n')	#以换行符分割，把str分割为list
 		# desc = request.POST["description"].split('\r')
@@ -134,14 +137,20 @@ def update_host(request,hostid):
 		manu = request.POST["manu"]
 		mac = request.POST["mac"]
 		os = request.POST["os"]
+		idc = request.POST["idc"]
+		sn = request.POST["sn"]
+		code = request.POST["code"]
 		description = request.POST["description"]
 		h = Hardware.objects.get(id=hostid)
 		h.ip = ip
 		h.hostname = hostname
-		h.manu = manu
 		h.mac = mac
+		h.manu = manu
+		h.code = code
 		h.os = os
-		h.description = description	
+		h.idc = idc 
+		h.sn = sn
+		h.description = description
 		h.save()
 		state = "更新成功"
 	return render_to_response("hardwareTemplate/update_host.html",locals())

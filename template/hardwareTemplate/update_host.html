@@ -10,25 +10,16 @@
         </div>
         <div class="box-content">
 			<form action="" method="post">
-			    <div class="form-group has-warning col-md-4">
-					<input type="text" class="form-control" id="ip" placeholder="IP地址" name="ip">	
-			    </div>
-			    <div class="form-group has-warning col-md-4">
-					<input type="text" class="form-control" id="hostname" placeholder="主机名" name="hostname">	
-			    </div>
-			    <div class="form-group has-warning col-md-4">
-					<input type="text" class="form-control" id="manu" placeholder="硬件厂商" name="manu">	
-			    </div>			
-			    <div class="form-group has-warning col-md-4">
-					<input type="text" class="form-control" id="mac" placeholder="物理地址" name="mac">	
-			    </div>
-			    <div class="form-group has-warning col-md-4">
-					<input type="text" class="form-control" id="os" placeholder="运行系统" name="os">	
-			    </div>			   
-				<div class="form-group has-error col-md-4">                
-			        <textarea class="form-control" id="description" placeholder="硬件描述" name="description"></textarea>
-			    </div>
-			        <input type="submit" class="button button-glow button-rounded button-raised button-primary" value="更新">
+					<input type="text" class="form-control" id="ip" placeholder="IP地址" name="ip" required="required"/><br>
+					<input type="text" class="form-control" id="hostname" placeholder="主机名" name="hostname" required="required"/><br>
+					<input type="text" class="form-control" id="mac" placeholder="MAC" name="mac" required="required"/><br>
+					<input type="text" class="form-control" id="manu" placeholder="厂商" name="manu"><br>
+					<input type="text" class="form-control" id="code" placeholder="资产编号" name="code"><br>
+					<input type="text" class="form-control" id="os" placeholder="系统" name="os"><br>
+					<input type="text" class="form-control" id="idc" placeholder="机房" name="idc"><br>
+					<input type="text" class="form-control" id="sn" placeholder="SN" name="sn"><br>
+			        <textarea class="form-control" id="description" placeholder="描述" name="description"></textarea><br>
+			        <input type="submit" id="submit" class="button button-glow button-rounded button-raised button-primary" value="修改"><br>
 			</form>
 			<h3>{{ state }}</h3>			
         </div>

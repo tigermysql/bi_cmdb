@@ -112,7 +112,9 @@ def deleteData(request):
 				id = int(data.id)
 				pub = data.rsa_pub
 			up_obj = UserPermission.objects.filter(user_id=id)
-			up_obj.delete()
+			up_obj.delete() #删除权限表的对应关系
+			# user_obj = Rsa.objects.get(id=id)
+			# user_obj.delete()	#删除用户本身，之后的版本加入离职人员
 			try:
 				exec_keys(vars_state="absent",pub_list=pub,host_list=iplist)
 				state = "删除成功"
