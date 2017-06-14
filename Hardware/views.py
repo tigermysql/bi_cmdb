@@ -21,6 +21,24 @@ def display(request):
 	# 	ip = data.ip     
 	# 	result_dict = exec_ansible(module='setup',args='',host=ip)[ip]
 	return render_to_response("hardwareTemplate/display.html",locals())
+
+def auto_add(request,hostid):
+	h = Hardware.objects.get(id=hostid)
+	ip = h.ip
+	result_dict = exec_ansible(module="setup",args="",host=ip)[ip]["ansible_facts"]
+	hostname = result_dict['ansible_hostname']
+	mac = result_dict["ansible_default_ipv4"]["macaddress"]
+	code = result_dict["ansible_cmdline"]["root"]
+	os = result_dict["ansible_distribution"]+result_dict["ansible_distribution_version"]
+	sn = result_dict['ansible_product_serial']
+	h.hostname = hostname
+	h.mac = mac
+	h.code = code
+	h.os = os
+	h.sn = sn
+	h.save()	
+	return HttpResponseRedirect("/Hardware/display/")
+
 @loginAuth	
 def state_update(request):
 	request.COOKIES["username"] and request.session["username"]
@@ -28,18 +46,18 @@ def state_update(request):
 	if request.method == "POST" and request.POST:
 		ip = str(request.POST["ip"])
 		hardwareData = Hardware.objects.all()
-		result_dict = exec_ansible(module="setup",args="",host=ip)[ip]
+		result_dict = exec_ansible(module="setup",args="",host=ip)[ip]["ansible_facts"]
 		data = {}
-		sn = result_dict["ansible_facts"]['ansible_product_serial']
-		hostname = result_dict["ansible_facts"]['ansible_hostname']
-		os_kernel = result_dict["ansible_facts"]['ansible_kernel']
-		cpu = result_dict["ansible_facts"]['ansible_processor'][0]
-		cpu_count = result_dict["ansible_facts"]['ansible_processor_count']
-		cpu_cores = result_dict["ansible_facts"]['ansible_processor_cores']
-		cpu_vcpus = result_dict["ansible_facts"]['ansible_processor_vcpus']
-		mem = result_dict["ansible_facts"]['ansible_memtotal_mb']
-		mem_used = result_dict["ansible_facts"]['ansible_memory_mb']['nocache']['used']
-		mem_free = result_dict["ansible_facts"]['ansible_memory_mb']['nocache']['free']
+		sn = result_dict['ansible_product_serial']
+		hostname = result_dict['ansible_hostname']
+		os_kernel = result_dict['ansible_kernel']
+		cpu = result_dict['ansible_processor'][0]
+		cpu_count = result_dict['ansible_processor_count']
+		cpu_cores = result_dict['ansible_processor_cores']
+		cpu_vcpus = result_dict['ansible_processor_vcpus']
+		mem = result_dict['ansible_memtotal_mb']
+		mem_used = result_dict['ansible_memory_mb']['nocache']['used']
+		mem_free = result_dict['ansible_memory_mb']['nocache']['free']
 		data["sn"] = sn
 		data["主机名"] = hostname
 		data["内核"] = os_kernel
@@ -47,9 +65,9 @@ def state_update(request):
 		data["cpu_count"] = cpu_count
 		data["cpu_cores"] = cpu_cores
 		data["cpu个数"] = cpu_vcpus
-		data["全部内存"] = mem
-		data["已使用内存"] = mem_used
-		data["剩余内存"] = mem_free
+		data["全部内存"] = str(mem)+" M"
+		data["已使用内存"] = str(mem_used)+" M"
+		data["剩余内存"] = str(mem_free)+ " M"
 	else:	
 		data = "未获取到数据"
 	return JsonResponse({"data":data})

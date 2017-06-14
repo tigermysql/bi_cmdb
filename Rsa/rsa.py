@@ -10,11 +10,11 @@ from ansible.executor.task_queue_manager import TaskQueueManager
 from ansible.executor.playbook_executor import PlaybookExecutor
 from ansible.plugins.callback import CallbackBase
 def exec_keys(vars_state,pub_list,host_list,passwords=''):
-	Options = namedtuple('Options',['connection','remote_user','ask_sudo_pass','verbosity','ack_pass','private_key_file','module_path','forks','become','become_method',
+	Options = namedtuple('Options',['connection','remote_user','ask_sudo_pass','verbosity','ack_pass','host_key_checking','module_path','forks','become','become_method',
 							'become_user','check','listhosts','listtasks','listtags','syntax','sudo_user','sudo'])	#初始化需要的对象
 	variable_manager = VariableManager()	#管理变量的类，包括主机，组，扩展等变量，之前版本是在 inventory中的	
 	loader = DataLoader()	#用来加载解析yaml文件或JSON内容,并且支持vault的解密
-	options = Options(connection='smart',remote_user='root',ack_pass=None,private_key_file='/var/www/html/CMDB/CMDB/id_rsa',sudo_user='root',forks=50,sudo='yes',ask_sudo_pass=False,verbosity=5,module_path=None,
+	options = Options(connection='smart',remote_user='root',ack_pass=None,host_key_checking=False,sudo_user='root',forks=50,sudo='yes',ask_sudo_pass=False,verbosity=5,module_path=None,
 					become=True,become_method='sudo',become_user='root',check=None,listhosts=None,listtasks=None,listtags=None,syntax=None)
 	passwords=dict(conn_pass=passwords)	#设置密码，必须是dict类型。如果ansible主机对服务器有密钥认证，则不需要密码
 	inventory = Inventory(

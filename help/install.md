@@ -4,7 +4,7 @@
 ## 一、安装软件  
 ### 1、安装python2.7
 
-	yum install wget git unzip openssh-server openssh openssh-clients gcc gcc-c++ readline-devel zlib-devel bzip2-devel xz-libs xz tar openssl openssl-devel pcre-devel python-devel libevent mysql-devel sqlite-devel sshpass -y
+	yum install wget git unzip openssh-server openssh openssh-clients gcc gcc-c++ readline-devel zlib-devel bzip2-devel xz-libs xz tar openssl openssl-devel pcre-devel python-devel libevent mysql-devel sqlite-devel sshpass libffi-devel -y
 	cd /usr/local/src/
 	wget https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tgz #可以从其他地址下载，这个比较慢
 	tar xvf Python-2.7.12.tgz
@@ -123,13 +123,17 @@
 
 
 #### (5)、密钥权限设置
-	ssh-keygen #生成密钥对
-	ssh-copy-id xxx.xxx.xxx.xxx #推送本地公钥到远程服务器
-	cp -rf /root/.ssh/id_rsa /var/www/html/CMDB/CMDB/ #拷贝私钥到密钥系统目录
-	mkdir -p /var/www/.ssh/
-	cp -rf /root/.ssh/known_hosts /var/www/.ssh/known_hosts #需要apache用户下也有授信列表
 	chown -R root.apache /var/www
 	chmod -R 775 /var/www
+	ssh-keygen #生成密钥对
+	ssh-copy-id xxx.xxx.xxx.xxx #推送本地公钥到远程服务器
+	mkdir -p /var/www/.ssh/
+	cp -rf /root/.ssh/known_hosts /var/www/.ssh/known_hosts #需要apache用户下也有授信列表
+	cp -rf /root/.ssh/id_rsa /var/www/.ssh/id_rsa #拷贝私钥到密钥系统目录
+	cd /var/www/.ssh/
+	chown apache.apche *
+	chomod 0600 id_rsa
+	chmod 0644 known_hosts
 	service httpd restart
 #### (4)、浏览器访问IP/index
 

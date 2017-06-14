@@ -4,6 +4,7 @@ from views import *
 urlpatterns = [
 	url(r'index/$',index),
 	url(r'display/$',display),
+	url(r'auto_add/(\d{1,3})',auto_add),
 	url(r'add_hardware/$',add_hardware),
 	url(r'add_hardware_batch/$',add_hardware_batch),
 	url(r'state_update/$',state_update),

@@ -6,7 +6,7 @@
 {% block css %}
 <style>
     .myinfocon{
-        width: 350px;
+        width: 300px;
         padding: 10px;
         line-height: 14px;
         font-size: 12px;
@@ -44,7 +44,7 @@
                         <th class="text-center">MAC</th>
                         <th class="text-center">状态</th>
                         <th class="text-center">系统</th>
-                        <th class="text-center">厂商</th>
+                        <!-- <th class="text-center">厂商</th> -->
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -55,14 +55,18 @@
                         <td class="myinfo text-center" data-myinfo="" style="position:relative"><a href="#" data-placement='top' data-toggle="tooltip">{{ hardware.hostname }}</a></td>
                         <td class="text-center">{{ hardware.mac }}</td>
                         <td class="text-center">
-                            <span class="label-success label label-default">未知</span>
+                            <span class="label-success label label-default">运行</span>
                         </td>
                         <td class="text-center">{{ hardware.os }}</td>
-                        <td class="text-center">{{ hardware.manu }}</td>
+                        <!-- <td class="text-center">{{ hardware.manu }}</td> -->
                         <td class="text-center">
                             <a class="button button-glow button-rounded button-raised button-action button-small"  href="#" onclick="state_update('{{ hardware.ip }}',this)">
                                 <i class="glyphicon glyphicon-refresh"></i>
                                 更新
+                            </a>
+                            <a class="button button-glow button-rounded button-raised button-highlight button-small"  href="/Hardware/auto_add/{{ hardware.id }}">
+                                <i class="glyphicon glyphicon-repeat"></i>
+                                自动
                             </a>
                             <a class="button button-glow button-rounded button-raised button-primary button-small"  href="#" onclick="update_host('{{ hardware.id }}')">
                                 <i class="glyphicon glyphicon-edit icon-white"></i>

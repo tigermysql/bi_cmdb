@@ -11,7 +11,7 @@ class ResultCallback(CallbackBase):
 	def v2_runner_on_ok(self, result, **kwargs):
 		host = result._host
 		self.data = json.dumps({host.name: result._result}, indent=4)
-		print(self.data)
+		# print(self.data)
 def exec_ansible(module,args,host,passwords=''):	
 	Options = namedtuple('Options',
 			['connection',
@@ -19,7 +19,7 @@ def exec_ansible(module,args,host,passwords=''):
 			'module_path',
 			'forks',
 			'become',
-			'private_key_file',
+#			'private_key_file',
 			'become_method',
 			'become_user',
 			'check'])
@@ -30,7 +30,7 @@ def exec_ansible(module,args,host,passwords=''):
 			module_path=None,
 			forks=5,
 			become=True,
-			private_key_file='/var/www/html/CMDB/CMDB/id_rsa',
+#			private_key_file='/var/www/html/CMDB/CMDB/id_rsa',
 			become_method='sudo',
 			become_user='root',
 			check=None)
@@ -62,3 +62,6 @@ def exec_ansible(module,args,host,passwords=''):
 		if tqm is not None:
 			tqm.cleanup()
 		return json.loads(results_callback.data)
+if __name__ == '__main__':
+	ip = "192.168.168.1"
+	print exec_ansible(module="ping",args="",host=ip)
